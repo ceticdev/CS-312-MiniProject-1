@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= post.title %></title>
+    <title>Error</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><%= post.title %></h1>
-            <small>By <%= post.author %> on <%= new Date(post.createdAt).toLocaleDateString() %></small>
+            <h1>Error</h1>
         </header>
         <main>
-            <article>
-                <p><%= post.content %></p>
-            </article>
-            <a href="/" class="btn">Back to Posts</a>
+            <p><%= message %></p>
+            <a href="/" class="btn">Go Back to Home</a>
         </main>
     </div>
 </body>

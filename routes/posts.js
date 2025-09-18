@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -15,16 +14,21 @@ router.post('/', (req, res) => {
     res.redirect('/');
 });
 
-
 // Show Post
 router.get('/:id', (req, res) => {
     const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) {
+        return res.status(404).render('error', { message: 'Post not found' });
+    }
     res.render('show', { post });
 });
 
 // Edit Post Form
 router.get('/:id/edit', (req, res) => {
     const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) {
+        return res.status(404).render('error', { message: 'Post not found' });
+    }
     res.render('edit', { post });
 });
 
@@ -32,6 +36,9 @@ router.get('/:id/edit', (req, res) => {
 router.post('/:id', (req, res) => {
     const { title, content, author } = req.body;
     const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) {
+        return res.status(404).render('error', { message: 'Post not found' });
+    }
     post.title = title;
     post.content = content;
     post.author = author;
@@ -40,7 +47,11 @@ router.post('/:id', (req, res) => {
 
 // Delete Post
 router.post('/:id/delete', (req, res) => {
-    posts = posts.filter(p => p.id !== parseInt(req.params.id));
+    const postIndex = posts.findIndex(p => p.id === parseInt(req.params.id));
+    if (postIndex === -1) {
+        return res.status(404).render('error', { message: 'Post not found' });
+    }
+    posts.splice(postIndex, 1);
     res.redirect('/');
 });
 
